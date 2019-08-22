@@ -10,6 +10,7 @@ RM := rm -rf
 -include sources.mk
 -include startup/subdir.mk
 -include src/subdir.mk
+-include drivers/src/subdir.mk
 -include subdir.mk
 -include objects.mk
 

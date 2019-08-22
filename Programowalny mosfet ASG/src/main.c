@@ -26,7 +26,9 @@ int main()
 	LEDHandle.PinConfig.PinMode = GPIO_MODE_OUTPUT;
 	LEDHandle.PinConfig.PUPD = GPIO_PUPDR_NOPUPD;
 
-	GPIO_WriteToOutput(LEDHandle, GPIO_PIN_NUMBER_5, ENABLE);
+	GPIO_Init(&LEDHandle);
+
+	GPIO_WriteToOutput(&LEDHandle, ENABLE);
 
 	while(1);
 	return 0;

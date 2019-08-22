@@ -1,6 +1,6 @@
-21:53:51 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
+19:34:33 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
 make -j4 all 
 make: Nothing to be done for 'all'.
 
-21:53:51 Build Finished (took 140ms)
+19:34:34 Build Finished (took 138ms)
 

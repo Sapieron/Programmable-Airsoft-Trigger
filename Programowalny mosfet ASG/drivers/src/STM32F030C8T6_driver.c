@@ -19,53 +19,41 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle)		//this function implements only ENAB
 {
 	if(pGPIOHandle->pGPIOx == GPIOA)
 	{
-		RCC_p->APB2ENR |= (1 << RCC_APB2ENR_IOPAEN);
+		RCC_p->AHBENR |= (1 << RCC_AHBENR_IOPAEN);
 	}
 	else if (pGPIOHandle->pGPIOx == GPIOB)
 	{
-		RCC_p->APB2ENR |= (1 << RCC_APB2ENR_IOPBEN);
+		RCC_p->APB2ENR |= (1 << RCC_AHBENR_IOPBEN);
 	}
 	else if (pGPIOHandle->pGPIOx == GPIOC)
 	{
-		RCC_p->APB2ENR |= (1 << RCC_APB2ENR_IOPCEN);
+		RCC_p->APB2ENR |= (1 << RCC_AHBENR_IOPCEN);
 	}
 	else if (pGPIOHandle->pGPIOx == GPIOD)
 	{
-		RCC_p->APB2ENR |= (1 << RCC_APB2ENR_IOPDEN);
+		RCC_p->APB2ENR |= (1 << RCC_AHBENR_IOPDEN);
 	}
 	else if (pGPIOHandle->pGPIOx == GPIOF)
 	{
-		RCC_p->APB2ENR |= (1 << RCC_APB2ENR_IOPFEN);
+		RCC_p->APB2ENR |= (1 << RCC_AHBENR_IOPFEN);
 	}
-	if(pGPIOHandle->PinConfig.PinNumber < 8)
-	{								//if PinNumer is lesser than 8, then all configs should be made within CRL register
-		pGPIOHandle->pGPIOx->CRL &= ~(0x3 << pGPIOHandle->PinConfig.PinNumber*4);
-		pGPIOHandle->pGPIOx->CRL &= ~(0x3 << (pGPIOHandle->PinConfig.PinNumber * 4 + 2));
-		pGPIOHandle->pGPIOx->CRL |= (pGPIOHandle->PinConfig.PinMode << pGPIOHandle->PinConfig.PinNumber*4);			//Set Mode to output or input
-		pGPIOHandle->pGPIOx->CRL |= (pGPIOHandle->PinConfig.PinInOrOut << (pGPIOHandle->PinConfig.PinNumber * 4 + 2));
-
-	}
-	else
-	{
-		pGPIOHandle->pGPIOx->CRH &= ~(0x3 << ((pGPIOHandle->PinConfig.PinNumber % 8 ) * 4 + 2));
-		pGPIOHandle->pGPIOx->CRH &= ~(0x3 << ((pGPIOHandle->PinConfig.PinNumber % 8 )*4));
-		pGPIOHandle->pGPIOx->CRH |= (pGPIOHandle->PinConfig.PinInOrOut << ((pGPIOHandle->PinConfig.PinNumber % 8 )* 4 + 2));
-		pGPIOHandle->pGPIOx->CRH |= (pGPIOHandle->PinConfig.PinMode << ((pGPIOHandle->PinConfig.PinNumber % 8 )*4));
-
-	}
+		pGPIOHandle->pGPIOx->MODER &= ~(0x3 << pGPIOHandle->PinConfig.PinNumber*2);		//reset two bits related to mode of certain pin
+		pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << pGPIOHandle->PinConfig.PinNumber * 4);
+		pGPIOHandle->pGPIOx->MODER |= (pGPIOHandle->PinConfig.PinMode << pGPIOHandle->PinConfig.PinNumber*2);
+		pGPIOHandle->pGPIOx->PUPDR |= (pGPIOHandle->PinConfig.PUPD << pGPIOHandle->PinConfig.PinNumber * 2);
 }
 
 
 
-void GPIO_WriteToOutput(GPIO_Handle_t *pGPIOHandle, uint8_t pinNumber, uint8_t enOrDis)
+void GPIO_WriteToOutput(GPIO_Handle_t *pGPIOHandle, uint8_t enOrDis)
 {
 	if(enOrDis == ENABLE)
 	{
-		pGPIOHandle->pGPIOx->BSRR |= (ENABLE << pinNumber);		//Atomic set
+		pGPIOHandle->pGPIOx->BSRR |= (ENABLE << pGPIOHandle->PinConfig.PinNumber);		//Atomic set
 	}
 	else
 	{
-		pGPIOHandle->pGPIOx->BSRR |= (DISABLE << (pinNumber + 16));
+		pGPIOHandle->pGPIOx->BSRR |= (ENABLE << (pGPIOHandle->PinConfig.PinNumber + 16));
 	}
 }
 
@@ -116,31 +104,31 @@ void GPIO_ToggleOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t pinNumber)
 //	}
 //}
 
-
-void GPIO_IRQHandling(EXTI_RegDef_t *pEXTI,uint8_t PinNumber)
-{
-	//1. Clean the PR register
-	if(pEXTI->PR & (ENABLE << PinNumber))
-		pEXTI->PR |= (ENABLE << PinNumber);
-}
-
-void GPIO_IRQ_EXTI_Init(EXTI_RegDef_t *pEXTI ,uint8_t EXTItriggerType, uint8_t PinNumber)
-{
-	if(!(RCC_p->APB2ENR & (ENABLE << 0)))
-	{
-		RCC_p->APB2ENR |= (ENABLE << 0);		//set AFIO clock
-	}
-	pEXTI->IMR |= (ENABLE << PinNumber);
-	//set FT or RT
-	if(EXTItriggerType == EXTI_IMR_FTSR)
-	{
-		pEXTI->FTSR |= (ENABLE << PinNumber);
-	}
-	else if(EXTItriggerType == EXTI_IMR_RTSR)
-	{
-		pEXTI->RTSR |= (ENABLE << PinNumber);
-	}
-}
+//TODO
+//void GPIO_IRQHandling(EXTI_RegDef_t *pEXTI,uint8_t PinNumber)
+//{
+//	//1. Clean the PR register
+//	if(pEXTI->PR & (ENABLE << PinNumber))
+//		pEXTI->PR |= (ENABLE << PinNumber);
+//}
+//
+//void GPIO_IRQ_EXTI_Init(EXTI_RegDef_t *pEXTI ,uint8_t EXTItriggerType, uint8_t PinNumber)
+//{
+//	if(!(RCC_p->APB2ENR & (ENABLE << 0)))
+//	{
+//		RCC_p->APB2ENR |= (ENABLE << 0);		//set AFIO clock
+//	}
+//	pEXTI->IMR |= (ENABLE << PinNumber);
+//	//set FT or RT
+//	if(EXTItriggerType == EXTI_IMR_FTSR)
+//	{
+//		pEXTI->FTSR |= (ENABLE << PinNumber);
+//	}
+//	else if(EXTItriggerType == EXTI_IMR_RTSR)
+//	{
+//		pEXTI->RTSR |= (ENABLE << PinNumber);
+//	}
+//}
 
 
 

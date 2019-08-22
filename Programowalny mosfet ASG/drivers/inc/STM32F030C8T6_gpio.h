@@ -77,14 +77,14 @@ typedef struct
 
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle);
 
-void GPIO_WriteToOutput(GPIO_Handle_t *pGPIOHandle, uint8_t pinNumber, uint8_t enOrDis);
+void GPIO_WriteToOutput(GPIO_Handle_t *pGPIOHandle, uint8_t enOrDis);
 
 //void GPIO_IRQ_EXTI_Init(EXTI_RegDef_t *pEXTI ,uint8_t EXTItriggerType, uint8_t PinNumber);
 
 
-uint8_t GPIO_ReadFromInput(GPIO_Handle_t *pGPIOHandle, uint8_t PinNumber);
+uint8_t GPIO_ReadFromInput(GPIO_Handle_t *pGPIOHandle, uint8_t PinNumber); //TODO
 
-void GPIO_ToggleOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t pinNumber);
+void GPIO_ToggleOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t pinNumber); //TODO
 
 //void GPIO_IRQHandling(EXTI_RegDef_t *pEXTI,uint8_t PinNumber);
 

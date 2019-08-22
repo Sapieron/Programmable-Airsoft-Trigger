@@ -6,7 +6,7 @@
 <stringAttribute key="fr.ac6.mcu.ide.DBG_DEVICE" value="ST-Link"/>
 <stringAttribute key="fr.ac6.mcu.ide.DBG_DEVICE_SHAREABLE_ALLOWED" value="false"/>
 <stringAttribute key="fr.ac6.mcu.ide.DBG_INTERFACE" value="SWD"/>
-<stringAttribute key="fr.ac6.mcu.ide.DBG_INTERFACE_FREQUENCY" value="5000.0"/>
+<stringAttribute key="fr.ac6.mcu.ide.DBG_INTERFACE_FREQUENCY" value="4000000.0"/>
 <stringAttribute key="fr.ac6.mcu.ide.DBG_LOW_POWER_MODE_ALLOWED" value="true"/>
 <intAttribute key="fr.ac6.mcu.ide.DBG_NB_CORES" value="1"/>
 <stringAttribute key="fr.ac6.mcu.ide.DBG_RESET_MODE" value="soft"/>

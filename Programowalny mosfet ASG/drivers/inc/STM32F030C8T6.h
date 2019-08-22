@@ -184,6 +184,7 @@ typedef struct
 
 #define RCC_AHBENR_IOPFEN		22
 
+
 #define RCC_APB1ENR_TIMER2		0
 #define RCC_APB1ENR_TIMER3		1
 #define RCC_APB1ENR_TIMER6		4

@@ -1,89 +1,50 @@
-21:19:23 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
+19:27:28 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
 make -j4 all 
-Building file: ../src/main.c
-Invoking: MCU GCC Compiler
-C:\Users\Pawel\Documents\ST\STM32F030 - mosfet progr\Programowalny mosfet ASG\Debug
-arm-none-eabi-gcc -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -DSTM32 -DSTM32F0 -DSTM32F030C8Tx -DDEBUG -I"C:/Users/Pawel/Documents/ST/STM32F030 - mosfet progr/Programowalny mosfet ASG/drivers/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
-Finished building: ../src/main.c
- 
-Building target: Programowalny mosfet ASG.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m0 -mthumb -mfloat-abi=soft -T"C:/Users/Pawel/Documents/ST/STM32F030 - mosfet progr/Programowalny mosfet ASG/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Programowalny mosfet ASG.elf" @"objects.list"   -lm
-Finished building target: Programowalny mosfet ASG.elf
- 
-C:/Ac6/SystemWorkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/make/make --no-print-directory post-build
-Generating binary and Printing size information:
-arm-none-eabi-objcopy -O binary "Programowalny mosfet ASG.elf" "Programowalny mosfet ASG.bin"
-arm-none-eabi-size "Programowalny mosfet ASG.elf"
-   text	   data	    bss	    dec	    hex	filename
-    800	   1080	   1092	   2972	    b9c	Programowalny mosfet ASG.elf
- 
-21:19:29 **** Programming project Programowalny mosfet ASG on chip ****
-"C:\\Ac6\\SystemWorkbench\\plugins\\fr.ac6.mcu.externaltools.openocd.win32_1.23.0.201904120827\\tools\\openocd\\bin\\openocd.exe" -f stm32.flash.1253595929100365155.cfg -s "C:\\Users\\Pawel\\Documents\\ST\\STM32F030 - mosfet progr\\Programowalny mosfet ASG" -s "C:\\Ac6\\SystemWorkbench\\plugins\\fr.ac6.mcu.debug_2.5.0.201904120827\\resources\\openocd\\st_scripts" -c "program Debug/.sw4stm32.6287244702886824984.elf.tmp verify reset " -c shutdown 
-Open On-Chip Debugger 0.10.0+dev-00021-g524e8c8 (2019-04-12-08:48)
-Licensed under GNU GPL v2
-For bug reports, read
-	http://openocd.org/doc/doxygen/bugs.html
-srst_only separate srst_nogate srst_open_drain connect_assert_srst
-Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
-adapter speed: 8000 kHz
-adapter_nsrst_delay: 100
-Info : clock speed 8000 kHz
-Info : STLINK v2 JTAG v32 API v2 SWIM v0 VID 0x0483 PID 0x3748
-Info : using stlink api v2
-Info : Target voltage: 2.941935
-Error: init mode failed (unable to connect to the target)
-in procedure 'program' 
-in procedure 'init' called at file "embedded:startup.tcl", line 495
-in procedure 'ocd_bouncer'
-** OpenOCD init failed **
-shutdown command invoked
-
-21:19:43 **** Programming project Programowalny mosfet ASG on chip ****
-"C:\\Ac6\\SystemWorkbench\\plugins\\fr.ac6.mcu.externaltools.openocd.win32_1.23.0.201904120827\\tools\\openocd\\bin\\openocd.exe" -f stm32.flash.4136074258888884540.cfg -s "C:\\Users\\Pawel\\Documents\\ST\\STM32F030 - mosfet progr\\Programowalny mosfet ASG" -s "C:\\Ac6\\SystemWorkbench\\plugins\\fr.ac6.mcu.debug_2.5.0.201904120827\\resources\\openocd\\st_scripts" -c "program Debug/.sw4stm32.6177102958266829144.elf.tmp verify reset " -c shutdown 
+make: Nothing to be done for 'all'.
+19:27:35 **** Programming project Programowalny mosfet ASG on chip ****
+"C:\\Ac6\\SystemWorkbench\\plugins\\fr.ac6.mcu.externaltools.openocd.win32_1.23.0.201904120827\\tools\\openocd\\bin\\openocd.exe" -f stm32.flash.7251839884048290219.cfg -s "C:\\Users\\Pawel\\Documents\\ST\\STM32F030 - mosfet progr\\Programowalny mosfet ASG" -s "C:\\Ac6\\SystemWorkbench\\plugins\\fr.ac6.mcu.debug_2.5.0.201904120827\\resources\\openocd\\st_scripts" -c "program Debug/.sw4stm32.2584842067759320717.elf.tmp verify reset " -c shutdown 
 Open On-Chip Debugger 0.10.0+dev-00021-g524e8c8 (2019-04-12-08:48)
 Licensed under GNU GPL v2
 For bug reports, read
 	http://openocd.org/doc/doxygen/bugs.html
 none separate
 Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
-adapter speed: 5 kHz
+adapter speed: 4000 kHz
 adapter_nsrst_delay: 100
-Info : clock speed 5 kHz
+Info : clock speed 4000 kHz
 Info : STLINK v2 JTAG v32 API v2 SWIM v0 VID 0x0483 PID 0x3748
 Info : using stlink api v2
-Info : Target voltage: 2.946236
-Error: init mode failed (unable to connect to the target)
-in procedure 'program' 
-in procedure 'init' called at file "embedded:startup.tcl", line 495
-in procedure 'ocd_bouncer'
-** OpenOCD init failed **
+Info : Target voltage: 2.945129
+Info : Stlink adapter speed set to 4000 kHz
+Info : STM32F030C8Tx.cpu: hardware has 4 breakpoints, 2 watchpoints
+Info : Listening on port 3333 for gdb connections
+target halted due to debug-request, current mode: Thread 
+xPSR: 0xc1000000 pc: 0x080002a8 msp: 0x20002000
+Info : Stlink adapter speed set to 4000 kHz
+adapter speed: 4000 kHz
+** Programming Started **
+auto erase enabled
+Info : device id = 0x20006440
+Info : flash size = 64kbytes
+target halted due to breakpoint, current mode: Thread 
+xPSR: 0x61000000 pc: 0x2000003a msp: 0x20002000
+wrote 3072 bytes from file Debug/.sw4stm32.2584842067759320717.elf.tmp in 0.221012s (13.574 KiB/s)
+** Programming Finished **
+** Verify Started **
+target halted due to breakpoint, current mode: Thread 
+xPSR: 0x61000000 pc: 0x2000002e msp: 0x20002000
+target halted due to breakpoint, current mode: Thread 
+xPSR: 0x61000000 pc: 0x2000002e msp: 0x20002000
+verified 2288 bytes in 0.089005s (25.104 KiB/s)
+** Verified OK **
+** Resetting Target **
 shutdown command invoked
-
-21:19:47 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
+19:27:50 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
 make -j4 all 
 make: Nothing to be done for 'all'.
-21:20:43 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
+19:28:57 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
 make -j4 all 
 make: Nothing to be done for 'all'.
-21:26:45 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-21:27:17 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-21:51:46 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-21:52:27 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-21:53:05 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-21:53:29 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
-make -j4 all 
-make: Nothing to be done for 'all'.
-21:53:51 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
+19:34:33 **** Incremental Build of configuration Debug for project Programowalny mosfet ASG ****
 make -j4 all 
 make: Nothing to be done for 'all'.
