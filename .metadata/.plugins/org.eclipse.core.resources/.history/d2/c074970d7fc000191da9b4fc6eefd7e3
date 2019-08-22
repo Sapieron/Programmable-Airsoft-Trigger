@@ -1,0 +1,14 @@
+/*
+ * main.c
+ *
+ *  Created on: 16.08.2019
+ *      Author: Pawel
+ */
+
+
+#include <stdint.h>
+
+int main()
+{
+	return 0;
+}
