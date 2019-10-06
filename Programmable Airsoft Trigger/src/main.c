@@ -1,9 +1,10 @@
 /* ******************************************
     Programmable Trigger for airsoft replicas
-    Copyright (c) 2019 Pawe³ Klisz (pawelochojec@gmail.com)
+    Copyright (c) 2019 Paweï¿½ Klisz (pawelochojec@gmail.com)
     [Released under MIT License. Please refer to license.txt for details]
    ****************************************** */
 
+#include <PASGM_Lib.h>
 #include <stdint.h>
 #include <string.h>
 #include <STM32F030C8T6.h>
@@ -14,7 +15,7 @@
 #include <STM32F030C8T6_systick.h>
 #include <STM32F030C8T6_pwr.h>
 
-/*
+/*		TODO to wrzucic do readme
  * PA0 - trigger, additional function: WKUP1
  * PA1 - SEMI pushbutton
  * PA2 - GEAR pushbutton
@@ -33,17 +34,12 @@
  * TODO: dodac CRC, wywolanie trybu z pamieci
  */
 
-
-
-
 #define MOTOR_PWM_FREQUENCY_IN_HZ 				1000
 #define MOTOR_PWM_DUTY_CYCLE_IN_PERCENT			2
 
-void StartUserProgrammingProcedure();
-
-void BeepMotorHandling(uint8_t numberOfCycles, uint32_t intervalInMs, uint32_t duration);
-
 void Setup();
+
+void BeepMotorHandling(uint8_t numberOfCycles, uint32_t intervalInMs, uint32_t durationOfSingleBeep);
 
 GPIO_Handle_t autoHandler_t,
 semiHandler_t,
@@ -64,38 +60,34 @@ int main(void){
 		GPIODeInit(&autoHandler_t);
 		GPIODeInit(&triggerHandler_t);
 		GPIODeInit(&motorHandler_t);
-		//TODO cause hardfault
+		//TODO restart MCU
 	}
 
-
-	/*
-	 * if initialization went fine, beep twice
-	 */
 	uint16_t beepForTimes = 2;
 	uint16_t intervalOfBeeps = 400;
 	uint16_t durationOfBeep = 200;
-
 	BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
 
+	sysTickHandler.config.counterValue = 0;			//todo refactor
+	sysTickHandler.config.autoReloadValue = TIME_BASE_OF_ONE_MS_FOR_SYSTICK * 2000;		//1ms times 2000 = 2s
+	sysTickHandler.config.counterInitialize = ENABLE;
+	SystickCounterHandling(&sysTickHandler);
 
-	/*
-	 * next, check if programming mode is enabled.
-	 */
 	while( ! isSystickFlagSet(&sysTickHandler))
-		if(GPIO_IsPinPressed(&semiHandler_t))
+		if(GPIO_IsPinPressed(&semiHandler_t)){
+			sysTickHandler.config.counterInitialize = DISABLE;
+			SystickCounterHandling(&sysTickHandler);
 			StartUserProgrammingProcedure();
-
-
-	/*
-	 * after handling the procedure, start the program execution
-	 */
-	beepForTimes = 4;		//to przeniesc jako element struktury do timera
-	intervalOfBeeps = 300;
-	durationOfBeep = 200;
-	BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
+			//TODO restart MCU
+		}
 
 	sysTickHandler.config.counterInitialize = DISABLE;
 	SystickCounterHandling(&sysTickHandler);
+
+	beepForTimes = 4;		//TODO: to przeniesc jako element struktury do timera
+	intervalOfBeeps = 300;
+	durationOfBeep = 200;
+	BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
 
 	TIMER3_DeInit(&motorBeeping);
 
@@ -117,7 +109,6 @@ int main(void){
 
 
 void Setup(){
-
 	memset(&motorHandler_t, CLEAR, sizeof(motorHandler_t));
 	memset(&motorBeeping, CLEAR, sizeof(motorBeeping));
 	memset(&autoHandler_t, CLEAR, sizeof(autoHandler_t));
@@ -185,31 +176,24 @@ void Setup(){
 	TIMER3_Init(&motorBeeping);
 
 	//TODO configure WFE (wake up core) 11.2.3 in RM0360
-
-
 }
 
 
-void StartUserProgrammingProcedure(){
-	//TODO Write this procedure
-}
-
-
-void BeepMotorHandling(uint8_t numberOfCycles, uint32_t intervalInMs, uint32_t duration){
-	//TODO: Dzia³a, ale trzeba napisac ladniej
-	uint32_t timeBaseOfOneMs = (F_CPU/32000);		//TODO: 16mln / 16k = 1000 daje opoznienie 2ms - chuj wie czemu
-	sysTickHandler.config.autoReloadValue = timeBaseOfOneMs * (intervalInMs+duration);
+void BeepMotorHandling(uint8_t numberOfCycles, uint32_t intervalInMs, uint32_t durationOfSingleBeep){
+	//TODO: Dziala, ale trzeba napisac ladniej
+	sysTickHandler.config.counterInitialize = DISABLE;
+	SystickCounterHandling(&sysTickHandler);
+	sysTickHandler.config.autoReloadValue = TIME_BASE_OF_ONE_MS_FOR_SYSTICK * (intervalInMs+durationOfSingleBeep);
 	sysTickHandler.config.counterValue = 0;
 	SysTickInit(&sysTickHandler);
 	sysTickHandler.config.counterInitialize = ENABLE;
 	SystickCounterHandling(&sysTickHandler);
 
 	for(uint16_t i = 0; i < numberOfCycles ; ++i){
-
 		motorBeeping.TIMER3Config.counterInitialize = ENABLE;
 		TIMER3CounterHandling(&motorBeeping);
 
-		while( ( sysTickHandler.config.autoReloadValue - (timeBaseOfOneMs * duration) ) <= sysTickHandler.pSysTick->CVR );
+		while( ( sysTickHandler.config.autoReloadValue - (TIME_BASE_OF_ONE_MS_FOR_SYSTICK * durationOfSingleBeep) ) <= sysTickHandler.pSysTick->CVR );
 
 		motorBeeping.TIMER3Config.counterInitialize = DISABLE;
 		TIMER3CounterHandling(&motorBeeping);
@@ -219,7 +203,6 @@ void BeepMotorHandling(uint8_t numberOfCycles, uint32_t intervalInMs, uint32_t d
 	sysTickHandler.config.counterInitialize = DISABLE;
 	SystickCounterHandling(&sysTickHandler);
 }
-
 
 void EXTI4_15_IRQHandler(){	//TODO: to bedzie obslugiwane z wkup
 	GPIOPendingRegisterHandling(&triggerHandler_t);

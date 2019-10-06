@@ -14,11 +14,12 @@
  ********************** Generic macros ****************************************************
  ******************************************************************************************/
 
-#define ENABLE					1
-#define DISABLE					0
-#define CLEAR					DISABLE
-#define SET						ENABLE
-#define F_CPU					16000000
+#define ENABLE							1
+#define DISABLE							0
+#define CLEAR							DISABLE
+#define SET								ENABLE
+#define F_CPU							16000000
+#define TIME_BASE_OF_ONE_MS_FOR_SYSTICK (uint32_t)(F_CPU/32000)
 
 /******************************************************************************************
  ********************** Register definition structures ************************************

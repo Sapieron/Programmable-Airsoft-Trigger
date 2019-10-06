@@ -34,7 +34,7 @@ void SysTickInit(SysTick_Handler_t *pSystickHandler){
 
 
 void SystickCounterHandling(SysTick_Handler_t *pSystickHandler){
-	SYSTICK_p->CSR &= ~(pSystickHandler->config.counterInitialize << SYSTICK_CSR_ENABLE);
+	SYSTICK_p->CSR &= ~(ENABLE << SYSTICK_CSR_ENABLE);
 	SYSTICK_p->CSR |= (pSystickHandler->config.counterInitialize << SYSTICK_CSR_ENABLE);
 }
 
