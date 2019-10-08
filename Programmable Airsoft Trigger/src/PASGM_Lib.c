@@ -5,11 +5,10 @@
  *      Author: pawel
  */
 
-#include <STM32F030C8T6.h>
 #include <PASGM_Lib.h>
 
 void StartUserProgrammingProcedure(){
 	//TODO Write this procedure
+	//TODO use eeprom memory to store last remembered configuration
 }
-
 

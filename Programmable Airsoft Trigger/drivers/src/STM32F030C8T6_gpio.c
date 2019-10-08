@@ -96,6 +96,10 @@ void GPIOIrqExtiInit(uint8_t EXTItriggerType, GPIO_Handle_t *pGPIOHandle){
 }
 
 uint8_t GPIO_IsPinPressed(GPIO_Handle_t *pGPIOHandle){
+	if(pGPIOHandle->PinConfig.PUPD == GPIO_PUPDR_PULLDOWN)
+	return GPIOReadFromInputPin(pGPIOHandle);
+	else if(pGPIOHandle->PinConfig.PUPD == GPIO_PUPDR_PULLUP)
+	return !GPIOReadFromInputPin(pGPIOHandle);
 	return GPIOReadFromInputPin(pGPIOHandle);
 }
 

@@ -33,14 +33,28 @@ void SysTickInit(SysTick_Handler_t *pSystickHandler){
 }
 
 
-void SystickCounterHandling(SysTick_Handler_t *pSystickHandler){
+void SysTickCounterHandling(SysTick_Handler_t *pSystickHandler){
 	SYSTICK_p->CSR &= ~(ENABLE << SYSTICK_CSR_ENABLE);
 	SYSTICK_p->CSR |= (pSystickHandler->config.counterInitialize << SYSTICK_CSR_ENABLE);
 }
 
-uint8_t isSystickFlagSet(SysTick_Handler_t *pSystickHandler){
+uint8_t isSysTickFlagSet(SysTick_Handler_t *pSystickHandler){
 	return (SYSTICK_p->CSR >> SYSTICK_CSR_COUNTFLAG) & 0x1;
 }
+
+void Systick_EnableTimerForSetTimeInMs(SysTick_Handler_t *sysTickHandler, uint32_t delayTime, uint8_t exceptionRequestEnOrDis){
+	sysTickHandler->config.counterValue = 0;
+	sysTickHandler->config.autoReloadValue = TIME_BASE_OF_ONE_MS_FOR_SYSTICK * delayTime;
+	sysTickHandler->config.counterInitialize = ENABLE;
+	sysTickHandler->config.exceptionRequestEnable = exceptionRequestEnOrDis;
+	SysTickCounterHandling(sysTickHandler);
+}
+
+uint32_t SysTickReadCurrentCounterValue(SysTick_Handler_t *pSystickHandler){
+	return pSystickHandler->pSysTick->CVR;
+}
+
+
 
 /******************************************************************************************
  ********************** Private functions *************************************************

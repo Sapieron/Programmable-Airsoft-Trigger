@@ -79,8 +79,6 @@ typedef struct
  ********************************* Main functions *****************************************
  ******************************************************************************************/
 
-//TODO zrobic to na wspolnej strukturze
-
 void TIMER6_7_Init(TIMER6_7_Handler_t *pTIMER6_7_Handler);
 
 void TIMER6_7_CounterHandling(TIMER6_7_Handler_t *pTIMER6_7_Handler);

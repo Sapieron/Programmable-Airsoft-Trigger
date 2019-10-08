@@ -25,7 +25,7 @@ void NVICInitVector(uint8_t nvicIRQNumber){
 	SetIRQVector(nvicIRQNumber);
 }
 
-void NVICDeinitVector(uint8_t nvicIRQNumber){
+void NVICDeInitVector(uint8_t nvicIRQNumber){
 	ResetIRQVector(nvicIRQNumber);
 }
 

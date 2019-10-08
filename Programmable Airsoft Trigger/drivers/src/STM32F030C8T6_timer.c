@@ -54,7 +54,6 @@ static void TIMER3_PWMModeHandling(TIMER3_Handler_t *pTIMER3_Handler);
  ******************************************************************************************/
 
 void TIMER6_7_Init(TIMER6_7_Handler_t *pTIMER6_7_Handler){
-	//TODO albo usunac albo poprawic
 	RCCTimer6_7_ClockInitialize(pTIMER6_7_Handler);
 	TIMER6_7_SetPrescalerValue(pTIMER6_7_Handler);
 	TIMER6_7_SetAutoReloadValue(pTIMER6_7_Handler);

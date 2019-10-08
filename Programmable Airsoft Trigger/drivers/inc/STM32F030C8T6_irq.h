@@ -15,7 +15,7 @@
 
 void NVICInitVector(uint8_t nvicIRQNumber);
 
-void NVICDeinitVector(uint8_t nvicIRQNumber);
+void NVICDeInitVector(uint8_t nvicIRQNumber);
 
 void NVICPendingRegisterHandling(uint8_t nvicIRQNumber);
 

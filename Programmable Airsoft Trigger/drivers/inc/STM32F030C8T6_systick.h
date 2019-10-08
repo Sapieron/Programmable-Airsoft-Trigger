@@ -31,9 +31,13 @@ typedef struct{
 
 void SysTickInit(SysTick_Handler_t *pSystickHandler);
 
-void SystickCounterHandling(SysTick_Handler_t *pSystickHandler);
+void SysTickCounterHandling(SysTick_Handler_t *pSystickHandler);
 
-uint8_t isSystickFlagSet(SysTick_Handler_t *pSystickHandler);
+uint8_t isSysTickFlagSet(SysTick_Handler_t *pSystickHandler);
+
+void Systick_EnableTimerForSetTimeInMs(SysTick_Handler_t *sysTickHandler, uint32_t delayTime, uint8_t interruptEnOrDis);
+
+uint32_t SysTickReadCurrentCounterValue(SysTick_Handler_t *pSystickHandler);
 
 /******************************************************************************************
  ********************************* Systick macros and defines *****************************
