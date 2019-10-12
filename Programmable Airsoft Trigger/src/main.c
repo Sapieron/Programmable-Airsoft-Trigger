@@ -37,15 +37,27 @@ TIMER3_Handler_t motorBeeping;
 SysTick_Handler_t sysTickHandler;
 
 int main(void){
-	Setup();
+	if(! isFlagSet(PWR_CSR_SBF)){	//check if device wakes up from standby mode
+		Setup();
+		if( GPIO_IsPinPressed(&semiHandler_t) || GPIO_IsPinPressed(&autoHandler_t) || GPIO_IsPinPressed(&triggerHandler_t)){
+			PASGM_TurnOffMCU();
+		}
+	}else{
+		//TODO make it SetupAfterWakeup
+		GPIOInit(&motorHandler_t);
+		GPIOInit(&semiHandler_t);
+		GPIOInit(&autoHandler_t);
+		GPIOInit(&triggerHandler_t);
 
-	if( GPIO_IsPinPressed(&semiHandler_t) || GPIO_IsPinPressed(&autoHandler_t) || GPIO_IsPinPressed(&triggerHandler_t)){
-		PASGM_TurnOffMCU();
+		RCCSetAPBClockPrescaler(RCC_CFGR_PRESCALER_APB_div8);
+		RCCSetAHBClockPrescaler(RCC_CFGR_PRESCALER_AHB_div16);
 	}
+
 
 	NVICInitVector(NVIC_IRQNUMBER_TIMER3);
 	TIMER3_Init(&motorBeeping);
 
+	//TODO code underneath should be handled by a structure
 	uint16_t beepForTimes = 2;
 	uint16_t intervalOfBeeps = 400;
 	uint16_t durationOfBeep = 200;
@@ -87,6 +99,7 @@ int main(void){
 
 
 void Setup(){
+	//TODO whole setup should be saved in flash
 	memset(&motorHandler_t, CLEAR, sizeof(motorHandler_t));
 	memset(&motorBeeping, CLEAR, sizeof(motorBeeping));
 	memset(&autoHandler_t, CLEAR, sizeof(autoHandler_t));
@@ -142,8 +155,6 @@ void Setup(){
 	GPIOInit(&semiHandler_t);
 	GPIOInit(&autoHandler_t);
 	GPIOInit(&triggerHandler_t);
-
-	//TODO configure WFE (wake up core) 11.2.3 in RM0360
 }
 
 
@@ -183,5 +194,5 @@ void PASGM_TurnOffMCU(){
 	GPIODeInit(&autoHandler_t);
 	GPIODeInit(&triggerHandler_t);
 	GPIODeInit(&motorHandler_t);
-	while(1);
+	//TODO reset system with systemControlBlock registers
 }

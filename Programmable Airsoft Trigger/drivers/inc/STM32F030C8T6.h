@@ -80,13 +80,13 @@ typedef struct{
 
 typedef struct{
 	volatile uint32_t ISER;
-	volatile uint32_t reserved1[32];
+	uint32_t reserved1[32];
 	volatile uint32_t ICER;
-	volatile uint32_t reserved2[32];
+	uint32_t reserved2[32];
 	volatile uint32_t ISPR;
-	volatile uint32_t reserved3[32];
+	uint32_t reserved3[32];
 	volatile uint32_t ICPR;
-	volatile uint32_t reserved4[96];
+	uint32_t reserved4[96];
 	volatile uint32_t IPR[8];
 }NVIC_RegDef_t;
 
@@ -112,12 +112,12 @@ typedef struct{
 	volatile uint32_t CNT;
 	volatile uint32_t PSC;
 	volatile uint32_t ARR;
-	volatile uint32_t reserved1;
+	uint32_t reserved1;
 	volatile uint32_t CCR1;
 	volatile uint32_t CCR2;
 	volatile uint32_t CCR3;
 	volatile uint32_t CCR4;
-	volatile uint32_t reserved2;
+	uint32_t reserved2;
 	volatile uint32_t DCR;
 	volatile uint32_t DMAR;
 }TIMER3_RegDef_t;
@@ -147,15 +147,27 @@ typedef struct{
 
 typedef struct{
 	volatile uint32_t CR1;
-	volatile uint32_t reserved1[2];
+	uint32_t reserved1[2];
 	volatile uint32_t DIER;
 	volatile uint32_t SR;
 	volatile uint32_t EGR;
-	volatile uint32_t reserved2[3];
+	uint32_t reserved2[3];
 	volatile uint32_t CNT;
 	volatile uint32_t PSC;
 	volatile uint32_t ARR;
 }TIMER6_7_RegDef_t;
+
+typedef struct{
+	volatile uint32_t CPUID;
+	volatile uint32_t ICSR;
+	uint32_t reserved[1];
+	volatile uint32_t AIRCR;
+	volatile uint32_t SCR;
+	volatile uint32_t CCR;
+	uint32_t reserved2[1];
+	volatile uint32_t SHPR2;
+	volatile uint32_t SHPR3;
+}SystemControlBlock_RegDef_t;
 
 /******************************************************************************************
  ********************** RegDef pointers to peripherals ************************************
@@ -188,6 +200,8 @@ typedef struct{
 
 #define EXTI_p					((EXTI_RegDef_t*)EXTI_BASE_ADDR)
 
+#define SCB_p					((SCB_RegDef_t*)SCB_BASE_ADDR)
+
 /******************************************************************************************
  ********************** Base addresses defines ********************************************
  ******************************************************************************************/
@@ -199,6 +213,7 @@ typedef struct{
 #define FLASH_BASE_ADDR			0x08000000
 #define SYSTICK_BASEADDR		0xE000E010
 #define NVIC_BASE_ADDR			0xE000E100
+#define SCB_BASE_ADDR			0xE000ED00
 
 
 #define RCC_BASE_ADDR			(AHB1_BASE_ADDR + 0x1000)
@@ -222,9 +237,6 @@ typedef struct{
 #define TIMER3_BASE_ADDR		(APB_BASE_ADDR + 0x400)
 #define TIMER6_BASE_ADDR		(APB_BASE_ADDR + 0x1000)
 #define TIMER7_BASE_ADDR		(APB_BASE_ADDR + 0x1400)
-
-
-
 
 
 
