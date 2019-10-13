@@ -42,5 +42,6 @@
 
 void PWRLowPowerHandling();
 
+void PWR_WKUPxHandling(uint8_t pwrCsrEwup, uint8_t enOrDis);
 
 #endif /* INC_STM32F030C8T6_PWR_H_ */

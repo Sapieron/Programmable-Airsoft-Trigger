@@ -37,56 +37,70 @@ TIMER3_Handler_t motorBeeping;
 SysTick_Handler_t sysTickHandler;
 
 int main(void){
-	Setup();
-
-	if( GPIO_IsPinPressed(&semiHandler_t) || GPIO_IsPinPressed(&autoHandler_t) || GPIO_IsPinPressed(&triggerHandler_t)){
-		PASGM_TurnOffMCU();
-	}
-
-	NVICInitVector(NVIC_IRQNUMBER_TIMER3);
-	TIMER3_Init(&motorBeeping);
-
-	uint16_t beepForTimes = 2;
-	uint16_t intervalOfBeeps = 400;
-	uint16_t durationOfBeep = 200;
-	BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
-
-	Systick_EnableTimerForSetTimeInMs(&sysTickHandler,2000, DISABLE);
-
-	while( ! isSysTickFlagSet(&sysTickHandler))
-		if(GPIO_IsPinPressed(&semiHandler_t)){
-			sysTickHandler.config.counterInitialize = DISABLE;
-			SysTickCounterHandling(&sysTickHandler);
-
-			StartUserProgrammingProcedure();
-
+	if(! isFlagSet(PWR_CSR_SBF)){	//check if device wakes up from standby mode
+		Setup();
+		if( GPIO_IsPinPressed(&semiHandler_t) || GPIO_IsPinPressed(&autoHandler_t) || GPIO_IsPinPressed(&triggerHandler_t)){
 			PASGM_TurnOffMCU();
 		}
 
-	sysTickHandler.config.counterInitialize = DISABLE;
-	SysTickCounterHandling(&sysTickHandler);
 
-	beepForTimes = 4;
-	intervalOfBeeps = 300;
-	durationOfBeep = 200;
-	BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
+		NVICInitVector(NVIC_IRQNUMBER_TIMER3);
+		TIMER3_Init(&motorBeeping);
 
-	TIMER3_DeInit(&motorBeeping);
+		//TODO code underneath should be handled by a structure
+		uint16_t beepForTimes = 2;
+		uint16_t intervalOfBeeps = 400;
+		uint16_t durationOfBeep = 200;
+		BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
 
-	motorHandler_t.PinConfig.PinMode = GPIO_MODE_OUTPUT;
-	motorHandler_t.PinConfig.alternateFunMode = DISABLE;
-	motorHandler_t.PinConfig.PUPD = GPIO_PUPDR_PULLDOWN;
-	GPIOInit(&motorHandler_t);
+		Systick_EnableTimerForSetTimeInMs(&sysTickHandler,2000, DISABLE);
 
-	GPIOIrqExtiInit(GPIO_EXTI_FallingTrigSR, &triggerHandler_t);	//TODO: that should be handled as event,
-	//as no interrupt handling is done by compiler, thus procedure is done faster
-	PWRLowPowerHandling();
+		while( ! isSysTickFlagSet(&sysTickHandler))
+			if(GPIO_IsPinPressed(&semiHandler_t)){
+				sysTickHandler.config.counterInitialize = DISABLE;
+				SysTickCounterHandling(&sysTickHandler);
 
+				StartUserProgrammingProcedure();
+
+				PASGM_TurnOffMCU();
+			}
+
+		sysTickHandler.config.counterInitialize = DISABLE;
+		SysTickCounterHandling(&sysTickHandler);
+
+		beepForTimes = 4;
+		intervalOfBeeps = 300;
+		durationOfBeep = 200;
+		BeepMotorHandling(beepForTimes, intervalOfBeeps, durationOfBeep);
+
+		TIMER3_DeInit(&motorBeeping);
+
+		motorHandler_t.PinConfig.PinMode = GPIO_MODE_OUTPUT;
+		motorHandler_t.PinConfig.alternateFunMode = DISABLE;
+		motorHandler_t.PinConfig.PUPD = GPIO_PUPDR_PULLDOWN;
+		GPIOInit(&motorHandler_t);
+
+		GPIOIrqExtiInit(GPIO_EXTI_FallingTrigSR, &triggerHandler_t);	//TODO: that should be handled as event,
+		//as no interrupt handling is done by compiler, thus procedure is done faster
+		PWRLowPowerHandling();
+		PWR_WKUPxHandling(PWR_CSR_EWUP1, ENABLE);
+	}else{
+		//TODO make it SetupAfterWakeup
+		GPIOInit(&semiHandler_t);
+		GPIOInit(&autoHandler_t);
+
+		RCCSetAPBClockPrescaler(RCC_CFGR_PRESCALER_APB_div8);
+		RCCSetAHBClockPrescaler(RCC_CFGR_PRESCALER_AHB_div16);
+
+		EXTI_InitEvent(triggerHandler_t.PinConfig.PinNumber);
+		EXTI_SWIER_Handling(triggerHandler_t.PinConfig.PinNumber);
+	}
 	while(1);
 }
 
 
 void Setup(){
+	//TODO whole setup should be saved in flash
 	memset(&motorHandler_t, CLEAR, sizeof(motorHandler_t));
 	memset(&motorBeeping, CLEAR, sizeof(motorBeeping));
 	memset(&autoHandler_t, CLEAR, sizeof(autoHandler_t));
@@ -108,13 +122,15 @@ void Setup(){
 	autoHandler_t.PinConfig.PinMode = GPIO_MODE_INPUT;
 	autoHandler_t.PinConfig.PUPD = GPIO_PUPDR_PULLUP;
 
+
+	//this structure is valid only till WKUP1 is initialized, then it's overwritten
 	triggerHandler_t.pGPIOx = GPIOA_p;
-	triggerHandler_t.PinConfig.PinNumber = GPIO_PIN_NUMBER_6;
+	triggerHandler_t.PinConfig.PinNumber = GPIO_PIN_NUMBER_0;
 	triggerHandler_t.PinConfig.PinMode = GPIO_MODE_INPUT;
 	triggerHandler_t.PinConfig.PUPD = GPIO_PUPDR_PULLDOWN;
 
 	gearSensorHandler_t.pGPIOx = GPIOA_p;
-	gearSensorHandler_t.PinConfig.PinNumber = GPIO_PIN_NUMBER_0;
+	gearSensorHandler_t.PinConfig.PinNumber = GPIO_PIN_NUMBER_3;		//TODO check if poniout is still valid
 	gearSensorHandler_t.PinConfig.PinMode = GPIO_MODE_INPUT;
 	gearSensorHandler_t.PinConfig.PUPD = GPIO_PUPDR_PULLUP;
 
@@ -142,8 +158,6 @@ void Setup(){
 	GPIOInit(&semiHandler_t);
 	GPIOInit(&autoHandler_t);
 	GPIOInit(&triggerHandler_t);
-
-	//TODO configure WFE (wake up core) 11.2.3 in RM0360
 }
 
 
@@ -173,7 +187,8 @@ void BeepMotorHandling(uint8_t numberOfCycles, uint32_t intervalInMs, uint32_t d
 	SysTickCounterHandling(&sysTickHandler);
 }
 
-void EXTI4_15_IRQHandler(){	//TODO: this will be handled by wkup1
+
+void EXTI0_1_IRQHandler(){
 	GPIOPendingRegisterHandling(&triggerHandler_t);
 	GPIOToggleOutputPin(&motorHandler_t);
 }
@@ -183,5 +198,5 @@ void PASGM_TurnOffMCU(){
 	GPIODeInit(&autoHandler_t);
 	GPIODeInit(&triggerHandler_t);
 	GPIODeInit(&motorHandler_t);
-	while(1);
+	//TODO reset system with systemControlBlock registers
 }
