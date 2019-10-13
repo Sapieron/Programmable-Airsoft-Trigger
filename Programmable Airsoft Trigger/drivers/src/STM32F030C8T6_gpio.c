@@ -81,7 +81,7 @@ void GPIOToggleOutputPin(GPIO_Handle_t *pGPIOHandle){
 		GPIOSetPin(pGPIOHandle);
 }
 
-void GPIOPendingRegisterHandling(GPIO_Handle_t *pGPIOHandle){
+void GPIOPendingRegisterHandling(GPIO_Handle_t *pGPIOHandle){	//TODO maybe that should be in irq library?
 	if(isPendingRegisterSet(pGPIOHandle))
 		resetPendingRegister(pGPIOHandle);
 }

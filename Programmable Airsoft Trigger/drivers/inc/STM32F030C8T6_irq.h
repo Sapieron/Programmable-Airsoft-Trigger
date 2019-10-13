@@ -19,6 +19,12 @@ void NVICDeInitVector(uint8_t nvicIRQNumber);
 
 void NVICPendingRegisterHandling(uint8_t nvicIRQNumber);
 
+void EXTI_InitEvent(uint8_t extiNumber);
+
+void EXTI_DeinitEvent(uint8_t extiNumber);
+
+void EXTI_SWIER_Handling(uint8_t enOrDis, uint8_t extiNumber);
+
 /******************************************************************************************
  ********************************* NVIC and EXTI macros ***********************************
  ******************************************************************************************/

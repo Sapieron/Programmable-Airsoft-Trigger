@@ -21,7 +21,7 @@ typedef struct{
 
 
 typedef struct{
-	SystemControlBlock_RegDef_t *pSCB;
+	SystemControlBlock_RegDef_t *pSCBx;
 	SystemBlockControl_Config_t config;
 }SystemBlockContol_Handle_t;
 

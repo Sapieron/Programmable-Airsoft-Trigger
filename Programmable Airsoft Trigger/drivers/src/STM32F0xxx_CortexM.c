@@ -6,6 +6,7 @@
  */
 
 #include <STM32F030C8T6.h>
+#include <STM32F030C8T6_pwr.h>
 #include <STM32F0xxx_CortexM.h>
 
 /*
@@ -15,8 +16,18 @@ WFI (Wait for Interrupt) or WFE (Wait for Event) while:
 – Clear WUF bit in Power Control/Status register (PWR_CSR)
 */
 
+void PWR_WKUPxHandling(uint8_t pwrCsrEwup, uint8_t enOrDis){
+	PWR_p->CSR |= (ENABLE << pwrCsrEwup);
+}
+
 void PWRInitPowerSavingMode(SystemBlockContol_Handle_t *pSCB){
 	if (pSCB->config.pwrSavingMode == PWR_STANDBY_MODE){
-		//TODO
+		pSCB->pSCBx->SCR |= (ENABLE << SCB_SCR_SLEEPDEEP);
+		PWR_p->CR |= (ENABLE << PWR_CR_PDDS);
+		PWR_ClearSCRWUFPendingRegister();
 	}
+}
+
+void PWR_ClearSCRWUFPendingRegister(){
+	PWR_p->CR |= (ENABLE << PWR_CR_CWUF);
 }

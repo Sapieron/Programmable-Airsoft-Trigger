@@ -18,8 +18,8 @@
  ********************** Main functions definitions ****************************************
  ******************************************************************************************/
 
-void PWRLowPowerHandling(){
-	//TODO finish low power handling
+void PWRLowPowerHandling(SystemBlockContol_Handle_t *pSCB){
+
 }
 
 /******************************************************************************************

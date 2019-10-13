@@ -53,8 +53,6 @@ typedef struct
 	uint32_t autoReloadValue;
 }TIMER6_7_Config_t;
 
-
-
 typedef struct
 {
 	TIMER1_RegDef_t *pTIMER1;
@@ -72,7 +70,6 @@ typedef struct
 	TIMER6_7_RegDef_t *pTIMER6_7;
 	TIMER6_7_Config_t TIMER6_7Config;
 }TIMER6_7_Handler_t;
-
 
 
 /******************************************************************************************

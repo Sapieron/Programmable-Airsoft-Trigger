@@ -169,6 +169,18 @@ typedef struct{
 	volatile uint32_t SHPR3;
 }SystemControlBlock_RegDef_t;
 
+
+typedef struct{
+	volatile uint32_t ACR;
+	volatile uint32_t KEYR;
+	volatile uint32_t OPTKEYR;
+	volatile uint32_t SR;
+	volatile uint32_t AR;
+	uint32_t reserved[1];
+	volatile uint32_t OBR;
+	volatile uint32_t WRPR;
+}Flash_RegDef_t;
+
 /******************************************************************************************
  ********************** RegDef pointers to peripherals ************************************
  ******************************************************************************************/
@@ -202,6 +214,7 @@ typedef struct{
 
 #define SCB_p					((SCB_RegDef_t*)SCB_BASE_ADDR)
 
+#define PWR_p					((PWR_RegDef_t*)PWR_BASE_ADDR)
 /******************************************************************************************
  ********************** Base addresses defines ********************************************
  ******************************************************************************************/
@@ -239,5 +252,6 @@ typedef struct{
 #define TIMER7_BASE_ADDR		(APB_BASE_ADDR + 0x1400)
 
 
+#define PWR_BASE_ADDR			(APB_BASE_ADDR + 0x7000)
 
 #endif /* INC_STM32F030C8T6_H_ */
