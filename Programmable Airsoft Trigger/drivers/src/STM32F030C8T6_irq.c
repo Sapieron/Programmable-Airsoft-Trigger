@@ -39,16 +39,16 @@ void EXTI_SWIER_Handling(uint8_t enOrDis, uint8_t extiNumber){
 	EXTI_p->SWIER |= (enOrDis << extiNumber);
 }
 
-void NVICInitVector(uint8_t nvicIRQNumber){
+void NVIC_InitVector(uint8_t nvicIRQNumber){
 	ResetIRQVector(nvicIRQNumber);
 	SetIRQVector(nvicIRQNumber);
 }
 
-void NVICDeInitVector(uint8_t nvicIRQNumber){
+void NVIC_DeInitVector(uint8_t nvicIRQNumber){
 	ResetIRQVector(nvicIRQNumber);
 }
 
-void NVICPendingRegisterHandling(uint8_t nvicIRQNumber){
+void NVIC_PendingRegisterHandling(uint8_t nvicIRQNumber){
 	NVIC_p->ICPR |= (ENABLE << nvicIRQNumber);
 }
 

@@ -20,7 +20,12 @@ void PWR_WKUPxHandling(uint8_t pwrCsrEwup, uint8_t enOrDis){
 	PWR_p->CSR |= (ENABLE << pwrCsrEwup);
 }
 
-void PWRInitPowerSavingMode(SystemBlockContol_Handle_t *pSCB){
+void PWR_ClearSCRWUFPendingRegister(){
+	PWR_p->CR |= (ENABLE << PWR_CR_CWUF);
+}
+
+
+void SCB_InitPowerSavingMode(SystemBlockContol_Handle_t *pSCB){
 	if (pSCB->config.pwrSavingMode == PWR_STANDBY_MODE){
 		pSCB->pSCBx->SCR |= (ENABLE << SCB_SCR_SLEEPDEEP);
 		PWR_p->CR |= (ENABLE << PWR_CR_PDDS);
@@ -28,6 +33,3 @@ void PWRInitPowerSavingMode(SystemBlockContol_Handle_t *pSCB){
 	}
 }
 
-void PWR_ClearSCRWUFPendingRegister(){
-	PWR_p->CR |= (ENABLE << PWR_CR_CWUF);
-}

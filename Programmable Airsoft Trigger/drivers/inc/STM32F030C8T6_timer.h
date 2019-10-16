@@ -84,7 +84,7 @@ void TIMER3_Init(TIMER3_Handler_t *pTIMER3_Handler);
 
 void TIMER3_DeInit(TIMER3_Handler_t *pTIMER3_Handler);
 
-void TIMER3CounterHandling(TIMER3_Handler_t *pTIMER3_Handler);
+void TIMER3_CounterHandling(TIMER3_Handler_t *pTIMER3_Handler);
 
 
 /******************************************************************************************

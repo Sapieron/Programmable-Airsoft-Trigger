@@ -29,15 +29,15 @@ typedef struct{
 	SysTick_Config_t config;
 }SysTick_Handler_t;
 
-void SysTickInit(SysTick_Handler_t *pSystickHandler);
+void SysTick_Init(SysTick_Handler_t *pSystickHandler);
 
-void SysTickCounterHandling(SysTick_Handler_t *pSystickHandler);
+void SysTick_CounterHandling(SysTick_Handler_t *pSystickHandler);
 
-uint8_t isSysTickFlagSet(SysTick_Handler_t *pSystickHandler);
+uint8_t SysTick_isFlagSet(SysTick_Handler_t *pSystickHandler);
 
 void Systick_EnableTimerForSetTimeInMs(SysTick_Handler_t *sysTickHandler, uint32_t delayTime, uint8_t interruptEnOrDis);
 
-uint32_t SysTickReadCurrentCounterValue(SysTick_Handler_t *pSystickHandler);
+uint32_t SysTick_ReadCurrentCounterValue(SysTick_Handler_t *pSystickHandler);
 
 /******************************************************************************************
  ********************************* Systick macros and defines *****************************

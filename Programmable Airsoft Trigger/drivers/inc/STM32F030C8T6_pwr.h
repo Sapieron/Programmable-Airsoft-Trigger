@@ -40,7 +40,9 @@
  * ******************************* Main functions *****************************************
  ******************************************************************************************/
 
-void PWRLowPowerHandling();
+uint8_t PWR_isFlagSet(uint8_t PWR_CSR_xxxx);
+
+void PWR_LowPowerHandling();
 
 void PWR_WKUPxHandling(uint8_t pwrCsrEwup, uint8_t enOrDis);
 

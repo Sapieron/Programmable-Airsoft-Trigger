@@ -29,7 +29,7 @@ typedef struct{
  ********************************* Main functions *****************************************
  ******************************************************************************************/
 
-void PWRInitPowerSavingMode(SystemBlockContol_Handle_t *pSCB);
+void SCB_InitPowerSavingMode(SystemBlockContol_Handle_t *pSCB);
 
 
 /******************************************************************************************

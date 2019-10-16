@@ -50,44 +50,44 @@ static void GPIOSetAFRegister(GPIO_Handle_t *pGPIOHandle);
  ********************** Main functions definitions ****************************************
  ******************************************************************************************/
 
-void GPIOInit(GPIO_Handle_t *pGPIOHandle){
-	RCCGpioClockInit(pGPIOHandle);
+void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
+	RCC_GpioClockInit(pGPIOHandle);
 	GPIOSetMODER(pGPIOHandle);
 	GPIOSetPUPDR(pGPIOHandle);
 	GPIOSetAFRegister(pGPIOHandle);
 }
 
-void GPIODeInit(GPIO_Handle_t *pGPIOHandle){
-	RCCGpioClockDeInit(pGPIOHandle);
+void GPIO_DeInit(GPIO_Handle_t *pGPIOHandle){
+	RCC_GpioClockDeInit(pGPIOHandle);
 	GPIOResetMODER(pGPIOHandle);
 	GPIOResetPUPDR(pGPIOHandle);
 }
 
-void GPIOWriteToOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t EnableOrDisable){
+void GPIO_WriteToOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t EnableOrDisable){
 	if(EnableOrDisable == ENABLE)
 		GPIOSetPin(pGPIOHandle);
 	else
 		GPIOResetPin(pGPIOHandle);
 }
 
-uint8_t GPIOReadFromInputPin(GPIO_Handle_t *pGPIOHandle){
-	return ( (pGPIOHandle->pGPIOx->IDR & ( 1 << pGPIOHandle->PinConfig.PinNumber) ) >> pGPIOHandle->PinConfig.PinNumber);
+uint8_t GPIO_ReadFromInputPin(GPIO_Handle_t *pGPIOHandle){
+	return ( (pGPIOHandle->pGPIOx->IDR & ( ENABLE << pGPIOHandle->PinConfig.PinNumber) ) >> pGPIOHandle->PinConfig.PinNumber);
 }
 
-void GPIOToggleOutputPin(GPIO_Handle_t *pGPIOHandle){
+void GPIO_ToggleOutputPin(GPIO_Handle_t *pGPIOHandle){
 	if(isOutputSet(pGPIOHandle))
 		GPIOResetPin(pGPIOHandle);
 	else
 		GPIOSetPin(pGPIOHandle);
 }
 
-void GPIOPendingRegisterHandling(GPIO_Handle_t *pGPIOHandle){	//TODO maybe that should be in irq library?
+void GPIO_IrqPendingRegisterHandling(GPIO_Handle_t *pGPIOHandle){	//TODO move these functions to irq library
 	if(isPendingRegisterSet(pGPIOHandle))
 		resetPendingRegister(pGPIOHandle);
 }
 
-void GPIOIrqExtiInit(uint8_t EXTItriggerType, GPIO_Handle_t *pGPIOHandle){
-	RCCSyscfgClockInit();
+void GPIO_ExtiInit(uint8_t EXTItriggerType, GPIO_Handle_t *pGPIOHandle){
+	RCC_SyscfgClockInit();
 	EnableInterruptMaskRegister(pGPIOHandle);
 	SetInterruptTriggerType(pGPIOHandle,EXTItriggerType);
 	if ( pGPIOHandle->PinConfig.PinMode == GPIO_MODE_AF )
@@ -97,10 +97,10 @@ void GPIOIrqExtiInit(uint8_t EXTItriggerType, GPIO_Handle_t *pGPIOHandle){
 
 uint8_t GPIO_IsPinPressed(GPIO_Handle_t *pGPIOHandle){
 	if(pGPIOHandle->PinConfig.PUPD == GPIO_PUPDR_PULLDOWN)
-	return GPIOReadFromInputPin(pGPIOHandle);
+	return GPIO_ReadFromInputPin(pGPIOHandle);
 	else if(pGPIOHandle->PinConfig.PUPD == GPIO_PUPDR_PULLUP)
-	return !GPIOReadFromInputPin(pGPIOHandle);
-	return GPIOReadFromInputPin(pGPIOHandle);
+	return !GPIO_ReadFromInputPin(pGPIOHandle);
+	return GPIO_ReadFromInputPin(pGPIOHandle);
 }
 
 /******************************************************************************************

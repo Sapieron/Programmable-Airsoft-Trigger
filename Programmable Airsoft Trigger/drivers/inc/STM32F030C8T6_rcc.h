@@ -16,15 +16,15 @@
  ********************************* Main functions *****************************************
  ******************************************************************************************/
 
-void RCCGpioClockInit(GPIO_Handle_t *pGPIOHandle);
+void RCC_GpioClockInit(GPIO_Handle_t *pGPIOHandle);
 
-void RCCGpioClockDeInit(GPIO_Handle_t *pGPIOHandle);
+void RCC_GpioClockDeInit(GPIO_Handle_t *pGPIOHandle);
 
-void RCCSyscfgClockInit();
+void RCC_SyscfgClockInit();
 
-void RCCSetAPBClockPrescaler(uint8_t prescalerAPB);
+void RCC_SetAPBClockPrescaler(uint8_t prescalerAPB);
 
-void RCCSetAHBClockPrescaler(uint8_t prescalerAHB);
+void RCC_SetAHBClockPrescaler(uint8_t prescalerAHB);
 
 void RCCTimer6_7_ClockInitialize(TIMER6_7_Handler_t *pTIMER6_7_Handler);
 

@@ -30,21 +30,21 @@ typedef struct{
  ********************************* Main functions *****************************************
  ******************************************************************************************/
 
-void GPIOInit(GPIO_Handle_t *pGPIOHandle);
+void GPIO_Init(GPIO_Handle_t *pGPIOHandle);
 
-void GPIODeInit(GPIO_Handle_t *pGPIOHandle);
+void GPIO_DeInit(GPIO_Handle_t *pGPIOHandle);
 
-void GPIOWriteToOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t EnableOrDisable);
+void GPIO_WriteToOutputPin(GPIO_Handle_t *pGPIOHandle, uint8_t EnableOrDisable);
 
-uint8_t GPIOReadFromInputPin(GPIO_Handle_t *pGPIOHandle);
+uint8_t GPIO_ReadFromInputPin(GPIO_Handle_t *pGPIOHandle);
 
 uint8_t GPIO_IsPinPressed(GPIO_Handle_t *pGPIOHandle);
 
-void GPIOToggleOutputPin(GPIO_Handle_t *pGPIOHandle);
+void GPIO_ToggleOutputPin(GPIO_Handle_t *pGPIOHandle);
 
-void GPIOPendingRegisterHandling(GPIO_Handle_t *pGPIOHandle);
+void GPIO_IrqPendingRegisterHandling(GPIO_Handle_t *pGPIOHandle);
 
-void GPIOIrqExtiInit(uint8_t EXTItriggerType, GPIO_Handle_t *pGPIOHandle);
+void GPIO_ExtiInit(uint8_t EXTItriggerType, GPIO_Handle_t *pGPIOHandle);
 
 
 /******************************************************************************************

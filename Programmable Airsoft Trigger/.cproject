@@ -34,7 +34,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/drivers/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.dialect.std.386392989" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.386392989" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.1576827662" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.1298399777" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
 							</tool>
@@ -95,6 +95,27 @@
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.590073975" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.16004145">
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.255684621" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.843884294" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1362186347.832127295" name="/" resourcePath="drivers/inc">
+						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.884207106" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.1288812013.1068182216.849103506" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu.1288812013.1068182216"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.1138890026.1932114859.1449083875" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board.1138890026.1932114859"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1097354946" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1999294033">
+								<option id="gnu.c.compiler.option.include.paths.1270006921" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
+								</option>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.1923112548" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.1783858471" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
+							</tool>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.706448055" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.357822389"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.1943482198" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker.433468021"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.726353016" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.1479737631"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.878425298" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver.598117449"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.1394338971" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.590073975">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.926706971" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.434270344" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -228,8 +249,6 @@
 		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.release.616792000;fr.ac6.managedbuild.config.gnu.cross.exe.release.616792000.;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.646747457;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.299614435">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1362186347;fr.ac6.managedbuild.config.gnu.cross.exe.debug.1362186347.;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.1577964475;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.2045406138">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

@@ -72,7 +72,7 @@ void TIMER3_Init(TIMER3_Handler_t *pTIMER3_Handler){
 	TIMER3_UpdateRegisters(pTIMER3_Handler);
 	TIMER3_SetInterruptValue(pTIMER3_Handler);
 	TIMER3_PWMModeHandling(pTIMER3_Handler);
-	TIMER3CounterHandling(pTIMER3_Handler);
+	TIMER3_CounterHandling(pTIMER3_Handler);
 }
 
 void TIMER3_DeInit(TIMER3_Handler_t *pTIMER3_Handler){
@@ -87,7 +87,7 @@ void TIMER6_7_CounterHandling(TIMER6_7_Handler_t *pTIMER6_7_Handler){
 	pTIMER6_7_Handler->pTIMER6_7->CR1 |= (((uint16_t)pTIMER6_7_Handler->TIMER6_7Config.counterInitialize) << TIMER_CR1_CEN);
 }
 
-void TIMER3CounterHandling(TIMER3_Handler_t *pTIMER3_Handler){
+void TIMER3_CounterHandling(TIMER3_Handler_t *pTIMER3_Handler){
 	pTIMER3_Handler->pTIMER3->CR1 &= ~(ENABLE << TIMER_CR1_CEN);
 	pTIMER3_Handler->pTIMER3->CR1 |= (((uint16_t)pTIMER3_Handler->TIMER3Config.counterInitialize) << TIMER_CR1_CEN);
 	if(pTIMER3_Handler->TIMER3Config.PWMConfig.enablePWMMode){

@@ -25,7 +25,7 @@ static void SysTickClockSource(SysTick_Handler_t *pSystickHandler);
  ********************** Main functions definitions ****************************************
  ******************************************************************************************/
 
-void SysTickInit(SysTick_Handler_t *pSystickHandler){
+void SysTick_Init(SysTick_Handler_t *pSystickHandler){
 	SysTickSetReloadValue(pSystickHandler);
 	SysTickSetCurrentValue(pSystickHandler);
 	SysTickClockSource(pSystickHandler);
@@ -33,12 +33,12 @@ void SysTickInit(SysTick_Handler_t *pSystickHandler){
 }
 
 
-void SysTickCounterHandling(SysTick_Handler_t *pSystickHandler){
+void SysTick_CounterHandling(SysTick_Handler_t *pSystickHandler){
 	SYSTICK_p->CSR &= ~(ENABLE << SYSTICK_CSR_ENABLE);
 	SYSTICK_p->CSR |= (pSystickHandler->config.counterInitialize << SYSTICK_CSR_ENABLE);
 }
 
-uint8_t isSysTickFlagSet(SysTick_Handler_t *pSystickHandler){
+uint8_t SysTick_isFlagSet(SysTick_Handler_t *pSystickHandler){
 	return (SYSTICK_p->CSR >> SYSTICK_CSR_COUNTFLAG) & 0x1;
 }
 
@@ -47,10 +47,10 @@ void Systick_EnableTimerForSetTimeInMs(SysTick_Handler_t *sysTickHandler, uint32
 	sysTickHandler->config.autoReloadValue = TIME_BASE_OF_ONE_MS_FOR_SYSTICK * delayTime;
 	sysTickHandler->config.counterInitialize = ENABLE;
 	sysTickHandler->config.exceptionRequestEnable = exceptionRequestEnOrDis;
-	SysTickCounterHandling(sysTickHandler);
+	SysTick_CounterHandling(sysTickHandler);
 }
 
-uint32_t SysTickReadCurrentCounterValue(SysTick_Handler_t *pSystickHandler){
+uint32_t SysTick_ReadCurrentCounterValue(SysTick_Handler_t *pSystickHandler){
 	return pSystickHandler->pSysTick->CVR;
 }
 

@@ -13,11 +13,11 @@
  ********************************* Main functions *****************************************
  ******************************************************************************************/
 
-void NVICInitVector(uint8_t nvicIRQNumber);
+void NVIC_InitVector(uint8_t nvicIRQNumber);
 
-void NVICDeInitVector(uint8_t nvicIRQNumber);
+void NVIC_DeInitVector(uint8_t nvicIRQNumber);
 
-void NVICPendingRegisterHandling(uint8_t nvicIRQNumber);
+void NVIC_PendingRegisterHandling(uint8_t nvicIRQNumber);
 
 void EXTI_InitEvent(uint8_t extiNumber);
 

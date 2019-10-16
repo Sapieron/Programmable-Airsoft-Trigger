@@ -27,7 +27,7 @@ static void SetAHBPrescaler(uint8_t prescalerAHB);
  ********************** Main functions definitions ****************************************
  ******************************************************************************************/
 
-void RCCGpioClockInit(GPIO_Handle_t *pGPIOHandle){
+void RCC_GpioClockInit(GPIO_Handle_t *pGPIOHandle){
 	if (pGPIOHandle->pGPIOx == GPIOA_p)
 		RCC_p->AHBENR |= (ENABLE << RCC_AHBENR_IOPAEN);
 	else if (pGPIOHandle->pGPIOx == GPIOB_p)
@@ -40,21 +40,21 @@ void RCCGpioClockInit(GPIO_Handle_t *pGPIOHandle){
 		RCC_p->AHBENR |= (ENABLE << RCC_AHBENR_IOPFEN);
 }
 
-void RCCSyscfgClockInit(){
+void RCC_SyscfgClockInit(){
 	RCC_p->APB2ENR |= (ENABLE << RCC_APB2ENR_SYSCFGEN);
 }
 
-void RCCGpioClockDeInit(GPIO_Handle_t *pGPIOHandle){
+void RCC_GpioClockDeInit(GPIO_Handle_t *pGPIOHandle){
 	RCC_p->APB2ENR &= ~(ENABLE << RCC_APB2ENR_SYSCFGEN);
 	RCC_p->APB2RSTR |= (ENABLE << RCC_APB2ENR_SYSCFGEN);
 }
 
-void RCCSetAPBClockPrescaler(uint8_t prescalerAPB){
+void RCC_SetAPBClockPrescaler(uint8_t prescalerAPB){
 	ClearAPBPrescaler();
 	SetAPBPrescaler(prescalerAPB);
 }
 
-void RCCSetAHBClockPrescaler(uint8_t prescalerAHB){
+void RCC_SetAHBClockPrescaler(uint8_t prescalerAHB){
 	ClearAHBPrescaler();
 	SetAHBPrescaler(prescalerAHB);
 }

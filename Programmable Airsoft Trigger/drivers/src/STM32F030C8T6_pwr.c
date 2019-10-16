@@ -7,6 +7,7 @@
 
 #include <STM32F030C8T6.h>
 #include <STM32F030C8T6_pwr.h>
+#include <STM32F0xxx_CortexM.h>
 
 /******************************************************************************************
  ********************** Private functions *************************************************
@@ -18,8 +19,12 @@
  ********************** Main functions definitions ****************************************
  ******************************************************************************************/
 
-void PWRLowPowerHandling(SystemBlockContol_Handle_t *pSCB){
+uint8_t PWR_isFlagSet(uint8_t PWR_CSR_xxxx){
+	return PWR_CSR_xxxx >> (PWR_p->CSR & (ENABLE << PWR_CSR_xxxx )) ;
+}
 
+void PWR_LowPowerHandling(SystemBlockContol_Handle_t *pSCB){
+	//TODO low power handling
 }
 
 /******************************************************************************************
